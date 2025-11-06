@@ -15,7 +15,7 @@ namespace Shoot.Controllers
     {
         private readonly Client_Service _clientService;
 
-
+            
 
         public ClientController(Client_Service clientService)
         {
@@ -40,9 +40,20 @@ namespace Shoot.Controllers
 
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] Login_Dto dto)
+        {
+            var token = await _clientService.LoginAsync(dto.Email, dto.Password);
+
+            if (token == null)
+                return Unauthorized("Invalid email or password");
+
+            return Ok(new { Token = token });
+        }
 
 
 
-    
-}
+
+
+    }
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Shoot.DBContext;
 using Shoot.DTOS;
 using Shoot.Models;
+using Shoot.Service;
 
 namespace Shoot.Service
 {
@@ -11,11 +12,13 @@ namespace Shoot.Service
 
         private readonly ShootDBContext _context;
         private readonly PasswordHasher<Client_Model> _passwordHasher;
+        private readonly JWTService _jwtService;
 
-        public Client_Service(ShootDBContext context)
+        public Client_Service(ShootDBContext context, JWTService jwtService)
         {
             _context = context;
             _passwordHasher = new PasswordHasher<Client_Model>();
+            _jwtService = jwtService;
         }
 
 
@@ -44,6 +47,25 @@ namespace Shoot.Service
 
 
 
+        }
+
+
+
+
+        public async Task<string?> LoginAsync(string email, string password)
+        {
+            var client = await _context.Clients.FirstOrDefaultAsync(c => c.Email == email);
+
+            if (client == null)
+                return null;
+
+            var result = _passwordHasher.VerifyHashedPassword(client, client.PasswordHash, password);
+            if (result == PasswordVerificationResult.Failed)
+                return null;
+
+           
+            var token = _jwtService.GenerateToken(client.Client_id.ToString(), client.Email, "Client");
+            return token;
         }
 
 
