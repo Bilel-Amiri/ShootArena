@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shoot.DBContext;
 
@@ -11,9 +12,11 @@ using Shoot.DBContext;
 namespace Shoot.Migrations
 {
     [DbContext(typeof(ShootDBContext))]
-    partial class ShootDBContextModelSnapshot : ModelSnapshot
+    [Migration("20251107161503_Update_ReservationDate_Time")]
+    partial class Update_ReservationDate_Time
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

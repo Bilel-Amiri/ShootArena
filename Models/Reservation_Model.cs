@@ -22,10 +22,12 @@ namespace Shoot.Models
         public Stadium_Model? Stadium { get; set; }
 
         [Required]
-        public DateTime ReservationDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateOnly ReservationDate { get; set; }
 
         [Required]
-        public DateTime StartTime { get; set; }
+        [DataType(DataType.Time)]
+        public TimeOnly StartTime { get; set; }
 
         // Default match duration: 1 hour 30 minutes
         public TimeSpan Duration { get; set; } = TimeSpan.FromMinutes(90);

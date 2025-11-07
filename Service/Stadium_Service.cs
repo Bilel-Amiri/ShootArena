@@ -68,7 +68,7 @@ namespace Shoot.Service
             if (result == PasswordVerificationResult.Failed)
                 return null;
 
-            var token = _jwtService.GenerateToken(stadium.Stadium_id.ToString(), stadium.Email, "Client");
+            var token = _jwtService.GenerateToken(stadium.Stadium_id.ToString(), stadium.Email, "Stadium");
             return token;
 
 

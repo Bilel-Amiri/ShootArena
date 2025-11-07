@@ -29,7 +29,8 @@ namespace Shoot.Service
 
             var claims = new[]
         {
-          new Claim("id", user_id),
+             new Claim(JwtRegisteredClaimNames.Sub, user_id),
+
 
             new Claim(JwtRegisteredClaimNames.Email, Email),
             new Claim(ClaimTypes.Role, Role),
