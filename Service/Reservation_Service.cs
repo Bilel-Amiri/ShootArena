@@ -91,7 +91,7 @@ namespace Shoot.Service
 
 
 
-            reservation.Status = "confirmèe";
+            reservation.Status = "confirmed";
             await _context.SaveChangesAsync();
 
 
@@ -120,7 +120,7 @@ namespace Shoot.Service
 
 
 
-            reservation.Status = "refusèe";
+            reservation.Status = "rejected";
 
             await _context.SaveChangesAsync();
             return "Reservation rejected successfully.";

@@ -4,10 +4,12 @@ using Shoot.Models;
 using Microsoft.AspNetCore.Identity;
 using Shoot.Service;
 using Shoot.DTOS;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Shoot.Controllers
 {
-
+   
     [Route("api/[controller]")]
     [ApiController]
     public class StadiumController : Controller
@@ -56,10 +58,79 @@ namespace Shoot.Controllers
 
             return Ok(new { Token = token });
 
+        }
 
+
+        [Authorize(Roles = "Stadium")]
+        [HttpGet("pending_reservations/{Stadiumid}")]
+
+        public async Task<IActionResult> GetPandingReservations() {
+
+
+            try
+            {
+                var stadiumIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+                if (stadiumIdClaim == null)
+                    return Unauthorized(new { message = "Invalid token: missing Owner ID claim." });
+
+                int Stadiumid = int.Parse(stadiumIdClaim.Value);
+
+
+
+
+                var result = await _Stadiumservice.GetPandingReservationsAsync(Stadiumid);
+
+                return Ok(result);
+
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
+        }
+
+
+
+
+
+        [Authorize(Roles = "Stadium")]
+        [HttpGet("confirmed_reservations")]
+
+        public async  Task<IActionResult> GetConfirmedReservations()
+        {
+
+            try
+            {
+                var stadiumIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+                if (stadiumIdClaim == null)
+                    return Unauthorized(new { message = "Invalid token: missing Owner ID claim." });
+
+                int Stadiumid = int.Parse(stadiumIdClaim.Value);
+
+
+
+
+                var result = await _Stadiumservice.GetConfirmedReservationsAsync(Stadiumid);
+
+                return Ok(result);
+
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
 
 
         }
+
+
+
+
 
 
 

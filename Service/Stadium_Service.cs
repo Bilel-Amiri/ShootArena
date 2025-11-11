@@ -76,5 +76,34 @@ namespace Shoot.Service
         }
 
 
+
+        public async Task<IEnumerable<Reservation_Model>> GetPandingReservationsAsync(int Stadium_id)
+        {
+
+            var reservations = await _context.Reservations
+         .Include(r => r.Stadium)
+         .Include(r => r.Client)
+         .Where(r => r.Stadium.Stadium_id == Stadium_id && r.Status == "En attente")
+         .ToListAsync();
+
+            return reservations;
+
+        }
+       
+
+
+        public async Task<IEnumerable<Reservation_Model>> GetConfirmedReservationsAsync(int Stadium_id)
+        {
+
+
+            var reservations = await _context.Reservations
+         .Include(r => r.Stadium)
+         .Include(r => r.Client)
+         .Where(r => r.Stadium.Stadium_id == Stadium_id && r.Status == "confirmed")
+         .ToListAsync();
+
+            return reservations;
+
+        }
     }
 }

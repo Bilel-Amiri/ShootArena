@@ -29,10 +29,10 @@ namespace Shoot.Models
         [DataType(DataType.Time)]
         public TimeOnly StartTime { get; set; }
 
-        // Default match duration: 1 hour 30 minutes
+      
         public TimeSpan Duration { get; set; } = TimeSpan.FromMinutes(90);
 
-        // Status: Pending, Confirmed, or Cancelled
+       
         [Required]
         public string Status { get; set; } = "Pending";
     }

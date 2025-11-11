@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Shoot.Models;
 
 namespace Shoot.Models
@@ -19,6 +20,7 @@ namespace Shoot.Models
 
         public string Phone { get; set; } = "";
 
+        [JsonIgnore]
         public ICollection<Reservation_Model>? Reservations { get; set; }
 
 
